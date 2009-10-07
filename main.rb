@@ -9,13 +9,13 @@ configure do
 
 	require 'ostruct'
 	Blog = OpenStruct.new(
-		:title => 'a scanty blog',
-		:author => 'John Doe',
+		:title => 'hack in random',
+		:author => 'Juvenn Woo',
 		:url_base => 'http://localhost:4567/',
-		:admin_password => 'changeme',
-		:admin_cookie_key => 'scanty_admin',
-		:admin_cookie_value => '51d6d976913ace58',
-		:disqus_shortname => nil
+		:admin_password => 'ideal328',
+		:admin_cookie_key => 'juvenn',
+		:admin_cookie_value => 'juvenninside',
+		:disqus_shortname => 'hackinrandom'
 	)
 end
 

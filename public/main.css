@@ -2,17 +2,16 @@ body {
 	margin: 0px;
 	padding: 20px;
 	margin-left: 50px;
-	background: #0A0A0D;
+	background: #fff;
 	text-align: justify;
-	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #FFFFDC;
+	font: 14px Helvetica, sans-serif;
+	color: #333;
 }
 
 h1, h2, h3 {
 	font: 1.82em;
 	font-weight: normal;
-	font-family: Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
+	font-family: Helvetica, sans-serif;
 	text-align: left;
 }
 
@@ -25,7 +24,7 @@ ul {
 }
 
 a {
-	color: #828170;
+	color: #000;
 }
 
 a:hover {
@@ -46,26 +45,26 @@ hr {
 	letter-spacing: -2px;
 	font-size: 4em;
 	font-weight: normal;
-	color: #FFFFFF;
+	color: #000;
 }
 
 #logo h1 a {
 	display: block;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #000;
 }
 
 #logo p {
 	margin: -103px 0 0 2px;
 	text-transform: uppercase;
-	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-family: Helvetica, sans-serif;
 	font-weight: bold;
 }
 
 #logo a {
 	display: block;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #000;
 }
 
 #logo2 h1 {
@@ -76,13 +75,12 @@ hr {
 	letter-spacing: -2px;
 	font-size: 2em;
 	font-weight: normal;
-	color: #FFFFFF;
 }
 
 #logo2 h1 a {
 	display: block;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #000;
 }
 
 #logo2 p {
@@ -95,7 +93,7 @@ hr {
 #logo2 a {
 	display: block;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #000;
 }
 
 /* Content */
@@ -135,8 +133,7 @@ hr {
 	display: block;
 	margin-top: -5px;
 	font-size: 14px;
-	color: #5C5C5C;
-	
+	font-weight: bold;
 }
 
 .post .title {
@@ -148,8 +145,7 @@ hr {
 }
 
 .post .title a {
-	color: white;
-	text-decoration: none;
+	color: #000;
 }
 
 .post .meta {
@@ -161,7 +157,7 @@ hr {
 }
 
 .post .meta a {
-	color: #828170;
+	color: #000;
 }
 
 .post .entry {
@@ -221,7 +217,7 @@ hr {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
+	color: #666;
 }
 
 #legal {
@@ -241,7 +237,7 @@ hr {
 .archive .title a {
 	font-size: 120%;
 	text-decoration: none;
-	color: #FFFFDC;
+	color: #000;
 }
 
 /* Code blocks */
@@ -250,7 +246,7 @@ pre {
 	font-family: Monaco, monospace;
 	color: #ccc;
 	background: #000;
-	border-left: 6px solid #222;
+	border-left: 6px solid #333;
 	padding: 0.4em;
 	padding-left: 0.8em;
 }
