@@ -11,7 +11,7 @@ configure do
 	Blog = OpenStruct.new(
 		:title => 'hack in random',
 		:author => 'Juvenn Woo',
-		:url_base => 'http://localhost:4567/',
+		:url_base => 'http://juvenn.heroku.com/',
 		:admin_password => 'ideal328',
 		:admin_cookie_key => 'juvenn',
 		:admin_cookie_value => 'juvenninside',
@@ -48,38 +48,30 @@ get '/' do
 	erb :index, :locals => { :posts => posts }, :layout => false
 end
 
-get '/past/:year/:month/:day/:slug/' do
-	post = Post.filter(:slug => params[:slug]).first
+get '/p/:id' do
+	post = Post[:id]
 	stop [ 404, "Page not found" ] unless post
 	@title = post.title
 	erb :post, :locals => { :post => post }
 end
 
-get '/past/:year/:month/:day/:slug' do
-	redirect "/past/#{params[:year]}/#{params[:month]}/#{params[:day]}/#{params[:slug]}/", 301
-end
-
-get '/past' do
+get '/archive' do
 	posts = Post.reverse_order(:created_at)
 	@title = "Archive"
 	erb :archive, :locals => { :posts => posts }
 end
 
-get '/past/tags/:tag' do
+get '/tags/:tag' do
 	tag = params[:tag]
 	posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
 	@title = "Posts tagged #{tag}"
 	erb :tagged, :locals => { :posts => posts, :tag => tag }
 end
 
-get '/feed' do
+get '/atom' do
 	@posts = Post.reverse_order(:created_at).limit(20)
 	content_type 'application/atom+xml', :charset => 'utf-8'
 	builder :feed
-end
-
-get '/rss' do
-	redirect '/feed', 301
 end
 
 ### Admin
@@ -93,28 +85,28 @@ post '/auth' do
 	redirect '/'
 end
 
-get '/posts/new' do
+get '/new' do
 	auth
-	erb :edit, :locals => { :post => Post.new, :url => '/posts' }
+	erb :edit, :locals => { :post => Post.new, :url => '/new' }
 end
 
-post '/posts' do
+post '/new' do
 	auth
-	post = Post.new :title => params[:title], :tags => params[:tags], :body => params[:body], :created_at => Time.now, :slug => Post.make_slug(params[:title])
+	post = Post.new :title => params[:title], :tags => params[:tags], :body => params[:body], :created_at => Time.now
 	post.save
 	redirect post.url
 end
 
-get '/past/:year/:month/:day/:slug/edit' do
+get '/p/:id/edit' do
 	auth
-	post = Post.filter(:slug => params[:slug]).first
+	post = Post[:id]
 	stop [ 404, "Page not found" ] unless post
 	erb :edit, :locals => { :post => post, :url => post.url }
 end
 
-post '/past/:year/:month/:day/:slug/' do
+post '/a/:id' do
 	auth
-	post = Post.filter(:slug => params[:slug]).first
+	post = Post[:id]
 	stop [ 404, "Page not found" ] unless post
 	post.title = params[:title]
 	post.tags = params[:tags]

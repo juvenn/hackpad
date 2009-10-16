@@ -9,7 +9,6 @@ class Post < Sequel::Model
 			primary_key :id
 			text :title
 			text :body
-			text :slug
 			text :tags
 			timestamp :created_at
 		end
@@ -18,7 +17,7 @@ class Post < Sequel::Model
 
 	def url
 		d = created_at
-		"/past/#{d.year}/#{d.month}/#{d.day}/#{slug}/"
+		"/p/#{id}"
 	end
 
 	def full_url
@@ -45,12 +44,8 @@ class Post < Sequel::Model
 
 	def linked_tags
 		tags.split.inject([]) do |accum, tag|
-			accum << "<a href=\"/past/tags/#{tag}\">#{tag}</a>"
+			accum << "<a href=\"/tags/#{tag}\">#{tag}</a>"
 		end.join(" ")
-	end
-
-	def self.make_slug(title)
-		title.downcase.gsub(/ /, '_').gsub(/[^a-z0-9_]/, '').squeeze('_')
 	end
 
 	########

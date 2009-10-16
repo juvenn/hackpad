@@ -34,15 +34,15 @@
 	<% end %>
 
 	<% if posts.empty? %>
-		<h2><p>Looks like this is a fresh install of Scanty.</p><p><a href="/auth">Log in</a>, then <a href="/posts/new">create a post</a>.</p></h2>
+		<h2><p>Looks like this is a fresh install of Scanty.</p><p><a href="/auth">Log in</a>, then <a href="/new">create a post</a>.</p></h2>
 	<% else %>
 		<div id="older_posts">
-			<a href="/past">Archive</a>
+			<a href="/archive">Archive</a>
 		</div>
 	<% end %>
 
 	<% if admin? %>
-		<div id="new_post"><a href="/posts/new"">New post</a></div>
+		<div id="new_post"><a href="/new"">New post</a></div>
 	<% end %>
 </div>
 
@@ -65,7 +65,7 @@
 
 <div id="footer">
 	<p id="legal">
-	Content by <%= Blog.author %> | 
+	(c) <%= Blog.author %> | 
 	Design adapted from <a href="http://www.freecsstemplates.org/preview/replenish">Replenish</a>
 </div>
 </body>
