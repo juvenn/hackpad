@@ -1,4 +1,4 @@
-require 'rubygems'
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../vendor/sequel')
 require 'spec'
 require 'sequel'
 
