@@ -4,19 +4,24 @@ require 'sinatra'
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
 require 'sequel'
 
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/mustache'
+require 'mustache/sinatra'
+
+
 configure do
 	Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
 
-	require 'ostruct'
-	Blog = OpenStruct.new(
-		:title => 'hack in random',
-		:author => 'Juvenn Woo',
-		:url_base => 'http://juvenn.heroku.com/',
-		:admin_password => 'ideal328',
-		:admin_cookie_key => 'juvenn',
-		:admin_cookie_value => 'juvenninside',
-		:disqus_shortname => 'hackinrandom'
-	)
+	set :mustaches, 'views/'
+
+	set :blog, {
+	  :title => 'hackpad',
+	  :author => 'Juvenn Woo',
+	  :url_base => 'http://juvenn.heroku.com/',
+	  :admin_password => 'ideal328',
+	  :admin_cookie_key => 'juvenn',
+	  :admin_cookie_value => 'juvenninside',
+	  :disqus_shortname => 'hackinrandom'
+	}
 end
 
 error do
@@ -31,7 +36,7 @@ require 'post'
 
 helpers do
 	def admin?
-		request.cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
+		request.cookies[options.blog.admin_cookie_key] == options.blog.admin_cookie_value
 	end
 
 	def auth
@@ -39,7 +44,6 @@ helpers do
 	end
 end
 
-layout 'layout'
 
 ### Public
 
