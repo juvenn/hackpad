@@ -1,0 +1,19 @@
+{{#posts}}
+	<div class="post">
+		<p class="date">{{created_at_month}}
+                  <b>{{created_at_date}}</b>
+                </p>
+		<h2 class="title"><a href="{{link}}">{{title}}</a></h2>
+		<p class="meta"><small>
+			{{{linked_tags}}}
+                        {{#disqus?}}
+				| <a href="{{link}}#disqus_thread">comments</a>
+                        {{/disqus?}}
+		</small></p>
+		<div class="entry">
+			{{{summary_html}}}
+			{{more?}}
+				<a href="{{link}}">Continue reading &raquo;</a>
+		</div>
+	</div>
+{{/posts}}
