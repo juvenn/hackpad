@@ -1,0 +1,19 @@
+<div class="postzoom">
+  <h2 class="title">{{entry_title}}</h2>
+  <p class="meta"><small>{{{linked_tags}}}</small></p>
+  <p class="meta">{{timestamp}}</p>
+  <div class="entry">
+    {{{entry_detail}}}
+  </div>
+  {{#admin?}}
+    <div class="edit"><a href="{{entry_link}}/edit">edit</a></div>
+  {{/admin?}}
+</div>
+
+{{#disqus?}}
+  <div id="disqus_thread"></div>
+  <script type="text/javascript" src="http://disqus.com/forums/{{disqus_shortname}}/embed.js"></script>
+  <noscript><a href="http://{{disqus_shortname}}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+{{/disqus?}}

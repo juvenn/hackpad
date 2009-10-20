@@ -13,7 +13,8 @@ configure do
 
 	set :mustaches, 'views/'
 
-	set :blog, {
+	require 'ostruct'
+	Blog = OpenStruct.new({
 	  :title => 'hackpad',
 	  :author => 'Juvenn Woo',
 	  :url_base => 'http://juvenn.heroku.com/',
@@ -21,7 +22,7 @@ configure do
 	  :admin_cookie_key => 'juvenn',
 	  :admin_cookie_value => 'juvenninside',
 	  :disqus_shortname => 'hackinrandom'
-	}
+	})
 end
 
 error do
@@ -40,7 +41,7 @@ helpers do
 	end
 
 	def auth
-		stop [ 401, 'Not authorized' ] unless admin?
+		halt [ 401, 'Not authorized' ] unless admin?
 	end
 end
 
@@ -48,15 +49,11 @@ end
 ### Public
 
 get '/' do
-	posts = Post.reverse_order(:created_at).limit(10)
-	erb :index, :locals => { :posts => posts }, :layout => false
+	mustache :index
 end
 
 get '/p/:id' do
-	post = Post[:id]
-	stop [ 404, "Page not found" ] unless post
-	@title = post.title
-	erb :post, :locals => { :post => post }
+	mustache :post, :locals => {:blog => options.blog}
 end
 
 get '/archive' do

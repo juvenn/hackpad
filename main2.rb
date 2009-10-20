@@ -36,6 +36,13 @@ class Blog < Sinatra::Application
   end
 
   helpers do
+    def admin?
+      request.cookies[Blog.settings[:admin_cookie_key]] == Blog.settings[:admin_cookie_value]
+    end
+
+    def auth
+      halt [ 401, 'Not authorized' ] unless admin?
+    end
   end
 
   ######## Public
@@ -44,12 +51,18 @@ class Blog < Sinatra::Application
     mustache :index
   end
 
-  get %r{/p/([\d]+)} do |:id|
-    post = Post[:id]
-    halt [404, "Article not found"] unless post
-    mustache :post
+  get %r{/p/([\d]+)} do |id|
+    # Instance variables will be copied to Mustache views
+    # See Mustache::Sinatra::Helpers#render_mustache
+    @post = Post[id]
+    halt [404, "Article not found"] unless @post
+    mustache :post, :locals => {:admin? => admin?} 
   end
 
 end
+
+# Instead of requiring in every views,
+# requiring here for DRY's principle
+require 'views/helpers'
 
 Blog.run!

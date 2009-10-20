@@ -1,6 +1,8 @@
 class Blog
   module Views
     class Index < Mustache
+      include Helpers
+
       def posts
 	Post.reverse_order(:created_at).limit(10).map do |p| {
 	  :created_at_month => p[:created_at].strftime("%b"),
@@ -12,12 +14,6 @@ class Blog
 	  :'more?' => p.more?
 	}
 	end
-      end
-      def disqus?
-	disqus_shortname ? true : false
-      end
-      def disqus_shortname
-	Blog.settings[:disqus_shortname]
       end
     end
   end
