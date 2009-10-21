@@ -48,15 +48,26 @@ class Blog < Sinatra::Application
   ######## Public
 
   get '/' do
+    # Instance variables will be copied to Mustache views
+    # See Mustache::Sinatra::Helpers#render_mustache
+    @posts = Post.reverse_order(:created_at).limit(10)
     mustache :index
   end
 
   get %r{/p/([\d]+)} do |id|
-    # Instance variables will be copied to Mustache views
-    # See Mustache::Sinatra::Helpers#render_mustache
     @post = Post[id]
-    halt [404, "Article not found"] unless @post
+    halt [404, "Post not found"] unless @post
     mustache :post, :locals => {:admin? => admin?} 
+  end
+
+  get '/archive' do
+    mustache :archive
+  end
+
+  get '/tags/:tag' do
+    tag = params[:tag]
+    @posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
+    mustache :tagged, :locals => {:tag => tag}
   end
 
 end

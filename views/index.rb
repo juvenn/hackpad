@@ -4,7 +4,7 @@ class Blog
       include Helpers
 
       def posts
-	Post.reverse_order(:created_at).limit(10).map do |p| {
+	@posts.map do |p| {
 	  :created_at_month => p[:created_at].strftime("%b"),
 	  :created_at_date => p[:created_at].strftime("%d"),
 	  :link => p.url,

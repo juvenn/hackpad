@@ -76,6 +76,18 @@ class Mustache
 
         end
 
+        # Tell the view class its extension and path so finding partials
+        # works as expected.
+        if klass.template_extension != 'mustache'
+          klass.template_extension = 'mustache'
+        end
+
+        # Confusingly Sinatra's `views` setting tells Mustache where the
+        # templates are found. It's fine, blame Chris.
+        if klass.template_path != options.views
+          klass.template_path = options.views
+        end
+
         # Create a new instance for playing with
         instance = klass.new
 
