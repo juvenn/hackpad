@@ -1,0 +1,15 @@
+<form action="{{action}}" method="post" name="edit">
+  <div class="postzoom">
+    <h2 class="title">
+      <input type="text" name="title" value="{{entry_title}}" />
+    </h2>
+    <p class="meta">
+      <input type="text" name="tags" value="{{entry_tags}}" />
+    </p>
+    <p class="meta">{{timestamp}}</p>
+    <div class="entry">
+      <textarea name="body">{{{entry_content}}}</textarea>
+    </div>
+    <div class="edit"><input type="submit" value="Save" /></div>
+  </div>
+</form>

@@ -66,6 +66,7 @@ class Blog < Sinatra::Application
     mustache :archive
   end
 
+  # TODO: patial rendering
   get '/tags/:tag' do
     tag = params[:tag]
     @posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
@@ -87,6 +88,22 @@ class Blog < Sinatra::Application
   post '/auth' do
     response.set_cookie(Blog.settings[:admin_cookie_key],Blog.settings[:admin_cookie_value]) if params[:password] == Blog.settings[:admin_password]
     redirect '/'
+  end
+
+  get '/new' do
+    auth
+    @post = Post.new
+    mustache :edit, :locals => {:action => '/new'}
+  end
+
+  post '/new' do
+    auth
+    post = Post.new(:title => params[:title],
+		    :tags => params[:tags],
+		    :body => params[:body],
+		    :created_at => Time.now)
+    post.save
+    redirect post.url
   end
 
 end

@@ -11,7 +11,7 @@ class Blog
 	@post.url
       end
 
-      def entry_detail
+      def entry_content
 	@post.body_html
       end
 
