@@ -66,7 +66,6 @@ class Blog < Sinatra::Application
     mustache :archive
   end
 
-  # TODO: patial rendering
   get '/tags/:tag' do
     tag = params[:tag]
     @posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
