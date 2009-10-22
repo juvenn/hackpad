@@ -14,7 +14,7 @@ class Blog
       end
 
       def timestamp
-	t.strftime("%c") if t = @post[:created_at] 
+	@post[:created_at].strftime("%c") if @post[:created_at] 
       end
     end
   end

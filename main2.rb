@@ -56,7 +56,7 @@ class Blog < Sinatra::Application
     mustache :index
   end
 
-  get %r{/p/([\d]+)} do |id|
+  get %r{/p/([\d]+)$} do |id|
     @post = Post[id]
     halt [404, "Post not found"] unless @post
     mustache :post, :locals => {:admin? => admin?} 
@@ -104,6 +104,24 @@ class Blog < Sinatra::Application
 		    :created_at => Time.now)
     post.save
     redirect post.url
+  end
+
+  get %r{/p/([\d]+)/edit} do |id|
+    auth
+    @post = Post[id]
+    halt [404, "Page not found"] unless @post
+    mustache :edit, :locals => {:action => @post.url}
+  end
+
+  post %r{/p/([\d]+)$} do |id|
+    auth
+    @post = Post[id]
+    halt [404, "Page not found"] unless @post
+    @post.title = params[:title]
+    @post.tags = params[:tags]
+    @post.body = params[:body]
+    @post.save
+    redirect @post.url
   end
 
 end
