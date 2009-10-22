@@ -29,7 +29,9 @@ class Blog < Sinatra::Application
     :disqus_shortname => 'hackinrandom'
   }
 
+  enable :static
   set :mustaches, 'views/'
+  set :views, 'views/'
   set :public, 'public/'
   
   error do
@@ -68,6 +70,23 @@ class Blog < Sinatra::Application
     tag = params[:tag]
     @posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
     mustache :tagged, :locals => {:tag => tag}
+  end
+
+  get '/atom' do
+    @posts = Post.reverse_order(:created_at).limit(20)
+    content_type 'application/atom+xml', :charset => 'utf-8'
+    builder :feed
+  end
+
+  #### Admin
+
+  get '/auth' do
+    mustache :auth
+  end
+
+  post '/auth' do
+    response.set_cookie(Blog.settings[:admin_cookie_key],Blog.settings[:admin_cookie_value]) if params[:password] == Blog.settings[:admin_password]
+    redirect '/'
   end
 
 end
