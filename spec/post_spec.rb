@@ -1,17 +1,17 @@
-require File.dirname(__FILE__) + '/base'
+require 'base'
 
 describe Post do
 	before do
 		@post = Post.new
+	        @post.save
 	end
+
+        def app
+                Blog
+        end
 
 	it "has a url in format: /p/:id" do
-		@post.url.should =~ '/p/#{{@post.id}}'
-	end
-
-	it "has a full url including the Blog.url_base" do
-		Blog.stub!(:url_base).and_return('http://blog.example.com/')
-		@post.full_url.should == 'http://blog.example.com/p/#{{@post.id}}'
+		@post.url.should == "/p/#{@post.id}"
 	end
 
 	it "produces html from the markdown body" do

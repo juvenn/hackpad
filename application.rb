@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'sinatra/base'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
@@ -11,8 +10,13 @@ require 'mustache/sinatra'
 class Blog < Sinatra::Application
   register Mustache::Sinatra
 
-  configure do
+  configure :production, :development do
     Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
+    enable :session
+  end
+
+  configure :test do
+    Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog_test.db')
   end
 
   $LOAD_PATH.unshift(File.dirname(__FILE__) + '/lib')
@@ -129,4 +133,3 @@ end
 # requiring here for DRY's principle
 require 'views/helpers'
 
-Blog.run!
