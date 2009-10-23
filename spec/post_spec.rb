@@ -20,7 +20,7 @@ describe Post do
 	end
 
 	it "syntax highlights code blocks" do
-		@post.to_html("<code>\none\ntwo</code>").should == "<code><pre>\n<span class=\"ident\">one</span>\n<span class=\"ident\">two</span></pre></code>"
+		@post.to_html("<code>\none\ntwo\n</code>").should == "\n<code><pre>\n<span class=\"ident\">one</span>\n<span class=\"ident\">two</span>\n</pre></code>\n"
 	end
 
 	it "makes the tags into links to the tag search" do

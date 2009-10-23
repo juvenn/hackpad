@@ -58,8 +58,9 @@ class Post < Sequel::Model
 			if !code_block and line.strip.downcase == '<code>'
 				out << Maruku.new(noncode.join("\n")).to_html
 				noncode = []
-				code_block = []
+				code_block = [""]
 			elsif code_block and line.strip.downcase == '</code>'
+			        code_block << ""
 				convertor = Syntax::Convertors::HTML.for_syntax "ruby"
 				highlighted = convertor.convert(code_block.join("\n"))
 				out << "<code>#{highlighted}</code>"
