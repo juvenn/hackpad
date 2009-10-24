@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra/base'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
@@ -7,20 +8,8 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/mustache'
 require 'mustache/sinatra'
 
 
-class Blog < Sinatra::Application
+class Blog < Sinatra::Base
   register Mustache::Sinatra
-
-  configure :production, :development do
-    Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
-    enable :session
-  end
-
-  configure :test do
-    Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog_test.db')
-  end
-
-  $LOAD_PATH.unshift(File.dirname(__FILE__) + '/lib')
-  require 'post'
 
   class << self; attr_reader :settings end
   @settings = {
@@ -33,11 +22,26 @@ class Blog < Sinatra::Application
     :disqus_shortname => 'hackinrandom'
   }
 
-  enable :static
+  set :app_file, caller_files.first || $0
+  set :run, Proc.new { $0 == app_file }
+  enable :static, :dump_errors
   set :mustaches, 'views/'
-  set :views, 'views/'
-  set :public, 'public/'
   
+  configure :production do
+    Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
+    enable :logging
+  end
+
+  configure :development do
+    Sequel.connect('sqlite://blog.db')
+    enable :logging, :show_exceptions
+  end
+
+  configure :test do
+    Sequel.connect('sqlite://blog_test.db')
+    enable :raise_errors
+  end
+
   error do
   end
 
@@ -51,11 +55,11 @@ class Blog < Sinatra::Application
     end
   end
 
+  require 'lib/post'
+
   ######## Public
 
   get '/' do
-    # Instance variables will be copied to Mustache views
-    # See Mustache::Sinatra::Helpers#render_mustache
     @posts = Post.reverse_order(:created_at).limit(10)
     mustache :index
   end
@@ -129,7 +133,8 @@ class Blog < Sinatra::Application
 
 end
 
-# Instead of requiring in every views,
-# requiring here for DRY's principle
 require 'views/helpers'
 
+if Blog.run?
+  Blog.run!
+end

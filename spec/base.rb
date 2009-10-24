@@ -3,4 +3,3 @@ require 'application'
 require 'spec'
 
 Blog.set :environment, :test
-
