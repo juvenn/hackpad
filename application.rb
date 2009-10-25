@@ -33,12 +33,12 @@ class Blog < Sinatra::Base
   end
 
   configure :development do
-    Sequel.connect('sqlite://blog.db')
+    Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
     enable :logging, :show_exceptions
   end
 
   configure :test do
-    Sequel.connect('sqlite://blogtest.db')
+    Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blogtest.db')
     enable :raise_errors
   end
 
