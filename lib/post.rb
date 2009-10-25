@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
 require 'syntax/convertors/html'
 
 Sequel::Model.plugin(:schema)
+Sequel::Model.plugin(:timestamps)
 
 class Post < Sequel::Model
 
@@ -14,6 +15,7 @@ class Post < Sequel::Model
       text :body
       text :tags
       timestamp :created_at
+      timestamp :updated_at
     end
     create_table
   end
