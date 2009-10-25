@@ -3,14 +3,19 @@ require File.dirname(__FILE__) + '/../vendor/maruku/maruku'
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
 require 'syntax/convertors/html'
 
+Sequel::Model.plugin(:schema)
+
 class Post < Sequel::Model
 
-  db.create_table? :posts do
-    primary_key :id
-    column :title, :text
-    column :body, :text
-    column :tags, :text
-    column :created_at, :timestamp
+  unless table_exists?
+    set_schema do
+      primary_key :id
+      text :title
+      text :body
+      text :tags
+      timestamp :created_at
+    end
+    create_table
   end
 
   def url
