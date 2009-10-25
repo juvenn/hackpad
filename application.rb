@@ -38,7 +38,7 @@ class Blog < Sinatra::Base
   end
 
   configure :test do
-    Sequel.connect('sqlite://blog_test.db')
+    Sequel.connect('sqlite://blogtest.db')
     enable :raise_errors
   end
 
@@ -60,7 +60,7 @@ class Blog < Sinatra::Base
   ######## Public
 
   get '/' do
-    @posts = Post.reverse_order(:created_at).limit(10)
+    @posts = Post.reverse(:created_at).limit(10)
     mustache :index
   end
 
@@ -76,7 +76,7 @@ class Blog < Sinatra::Base
 
   get '/tags/:tag' do
     tag = params[:tag]
-    @posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
+    @posts = Post.filter(:tags.like("%#{tag}%")).reverse(:created_at).limit(30)
     mustache :tagged, :locals => {:tag => tag}
   end
 
