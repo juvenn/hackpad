@@ -35,4 +35,11 @@ describe Post do
 		Post.filter(:title => 'hello').first.body.should == 'world'
 	end
 
+	it "has automatically created timestamp" do
+	        @post.title = 'movie'
+		@post.body = 'good movie'
+		@post.save
+		@post[:created_at].should_not == nil
+	end
+
 end
