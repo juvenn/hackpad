@@ -15,7 +15,6 @@ class Post < Sequel::Model
       text :body
       text :tags
       timestamp :created_at
-      timestamp :updated_at
     end
     create_table
   end
