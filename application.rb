@@ -55,7 +55,7 @@ class Blog < Sinatra::Base
     end
   end
 
-  require 'lib/post'
+  require 'model/post'
 
   ######## Public
 
