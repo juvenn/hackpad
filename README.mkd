@@ -1,0 +1,44 @@
+Hackpad, simple blog for hackers
+
+== Overview
+
+Hackpad is a simple blog engine, for hackers (as me) to play with, and who wants to customize everything. The code is here, hacking and push to [Heroku](http://heroku.com). There you go, delighted and enjoy!
+
+== Features
+
+* Archives
+* Tags
+* Markdown
+* Ruby code highlighting
+* Atom feed
+* Disqus comments
+
+== Dependencies
+
+* Sinatra/Rack (`gem install sinatra`)
+* Sequel for ORM (vendored)
+* [Mustache](http://github.com/defunkt/mustache) for template rendering (vendored)
+* Maruku for Markdown (vendored)
+* Syntax for highlighting (vendored)
+
+== Setup
+
+Edit application.rb and change the `Blog.settings`. For security purposes, change the admin password and the admin cookie key and value.  These last two can be set to any random value you like, just choose something other than the default.
+
+Then run the server:
+
+    $ ruby application.rb
+
+And visit: [http://localhost:4567](http://localhost:4567)
+
+Log in with the password you selected, then click New Post.  The rest should be self-explanatory.
+
+For more, please consult [scanty][1]
+
+== Meta
+
+* It's a fork of Adam Wiggins' [Scanty][1]. Thanks goes to Adam and its contributers.
+* MIT License as scanty.
+
+
+[1]: http://github.com/adamwiggins/scanty 'Scanty at GitHub'

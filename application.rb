@@ -14,12 +14,12 @@ class Blog < Sinatra::Base
   class << self; attr_reader :settings end
   @settings = {
     :title => 'hackpad',
-    :author => 'Juvenn Woo',
-    :url_base => 'http://juvenn.heroku.com/',
-    :admin_password => 'ideal328',
-    :admin_cookie_key => 'juvenn',
-    :admin_cookie_value => 'juvenninside',
-    :disqus_shortname => 'hackinrandom'
+    :author => 'Hack Pad',
+    :url_base => 'http://localhost:4567/',
+    :admin_password => 'secret',
+    :admin_cookie_key => 'admin',
+    :admin_cookie_value => 'admin',
+    :disqus_shortname => nil
   }
 
   set :app_file, caller_files.first || $0
